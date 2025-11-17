@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> درآمد روزانه</title>
+    <title>درآمد روزانه</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* تمام استایل‌های قبلی بدون تغییر باقی می‌مانند */
         * {
             margin: 0;
             padding: 0;
@@ -22,6 +21,15 @@
             --background-color: #78909C;
             --text-color: #333;
             --card-color: white;
+        }
+
+        /* Dark Mode Variables */
+        .dark-mode {
+            --primary-color: #78909C;
+            --secondary-color: #607D8B;
+            --background-color: #263238;
+            --text-color: #ECEFF1;
+            --card-color: #37474F;
         }
 
         body {
@@ -42,6 +50,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             overflow: hidden;
             transition: all 0.3s ease;
+            color: var(--text-color);
         }
 
         .header {
@@ -193,6 +202,11 @@
             border-bottom: 1px solid #ddd;
         }
 
+        .dark-mode .tabs {
+            background-color: #455A64;
+            border-bottom: 1px solid #546E7A;
+        }
+
         .tab {
             flex: 1;
             padding: 12px;
@@ -202,10 +216,18 @@
             font-weight: 500;
         }
 
+        .dark-mode .tab {
+            color: #ECEFF1;
+        }
+
         .tab.active {
             background-color: white;
             border-bottom: 3px solid var(--primary-color);
             color: var(--primary-color);
+        }
+
+        .dark-mode .tab.active {
+            background-color: #455A64;
         }
 
         .content {
@@ -231,6 +253,10 @@
             color: #555;
         }
 
+        .dark-mode .input-group label {
+            color: #B0BEC5;
+        }
+
         .date-input {
             display: flex;
             gap: 10px;
@@ -245,6 +271,12 @@
             font-size: 1rem;
             background-color: #f9f9f9;
             cursor: pointer;
+        }
+
+        .dark-mode .date-input input {
+            background-color: #455A64;
+            border-color: #546E7A;
+            color: #ECEFF1;
         }
 
         .today-btn {
@@ -271,6 +303,12 @@
             background-color: #f9f9f9;
         }
 
+        .dark-mode .amount-input {
+            background-color: #455A64;
+            border-color: #546E7A;
+            color: #ECEFF1;
+        }
+
         .add-btn {
             width: 100%;
             padding: 14px;
@@ -291,8 +329,30 @@
 
         .entries-list {
             margin-bottom: 20px;
-            max-height: 300px;
+            max-height: 200px;
             overflow-y: auto;
+        }
+
+        .entries-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .entries-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .dark-mode .entries-list::-webkit-scrollbar-track {
+            background: #455A64;
+        }
+
+        .entries-list::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        .entries-list::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
         }
 
         .entry-item {
@@ -304,6 +364,10 @@
             animation: fadeIn 0.3s ease;
         }
 
+        .dark-mode .entry-item {
+            border-bottom: 1px solid #546E7A;
+        }
+
         .entry-item:last-child {
             border-bottom: none;
         }
@@ -311,6 +375,10 @@
         .entry-date {
             font-weight: 500;
             color: #555;
+        }
+
+        .dark-mode .entry-date {
+            color: #B0BEC5;
         }
 
         .entry-amount {
@@ -339,10 +407,18 @@
             margin-top: 10px;
         }
 
+        .dark-mode .total-container {
+            background-color: #455A64;
+        }
+
         .total-label {
             font-size: 1rem;
             color: #777;
             margin-bottom: 5px;
+        }
+
+        .dark-mode .total-label {
+            color: #B0BEC5;
         }
 
         .total-amount {
@@ -357,10 +433,18 @@
             color: #888;
         }
 
+        .dark-mode .empty-state {
+            color: #B0BEC5;
+        }
+
         .empty-state i {
             font-size: 3rem;
             margin-bottom: 15px;
             color: #ddd;
+        }
+
+        .dark-mode .empty-state i {
+            color: #546E7A;
         }
 
         /* Date Picker Modal */
@@ -386,6 +470,11 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
+        .dark-mode .date-picker-content {
+            background-color: #37474F;
+            color: #ECEFF1;
+        }
+
         .date-picker-header {
             display: flex;
             justify-content: space-between;
@@ -395,9 +484,17 @@
             border-bottom: 1px solid #eee;
         }
 
+        .dark-mode .date-picker-header {
+            border-bottom: 1px solid #546E7A;
+        }
+
         .date-picker-title {
             font-weight: 600;
             color: #333;
+        }
+
+        .dark-mode .date-picker-title {
+            color: #ECEFF1;
         }
 
         .date-selectors {
@@ -414,12 +511,22 @@
             background-color: #f9f9f9;
         }
 
+        .dark-mode .date-selectors select {
+            background-color: #455A64;
+            border-color: #546E7A;
+            color: #ECEFF1;
+        }
+
         .close-btn {
             background: none;
             border: none;
             font-size: 1.2rem;
             color: #777;
             cursor: pointer;
+        }
+
+        .dark-mode .close-btn {
+            color: #B0BEC5;
         }
 
         .date-picker-actions {
@@ -442,6 +549,11 @@
             color: #333;
         }
 
+        .dark-mode .cancel-btn {
+            background-color: #455A64;
+            color: #ECEFF1;
+        }
+
         .confirm-btn {
             background-color: var(--primary-color);
             color: white;
@@ -450,7 +562,7 @@
         /* Reports Section */
         .reports-container {
             margin-top: 20px;
-            height: 400px;
+            height: 430px;
             display: flex;
             flex-direction: column;
         }
@@ -463,6 +575,10 @@
             padding: 5px;
         }
 
+        .dark-mode .report-type-selector {
+            background-color: #455A64;
+        }
+
         .report-type {
             flex: 1;
             text-align: center;
@@ -470,6 +586,10 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
+        }
+
+        .dark-mode .report-type {
+            color: #ECEFF1;
         }
 
         .report-type.active {
@@ -492,17 +612,24 @@
             color: #555;
         }
 
+        .dark-mode .month-selector button {
+            color: #B0BEC5;
+        }
+
         .month-name {
             font-weight: 600;
             font-size: 1.1rem;
         }
 
-        /* FIX: Limit reports content height and add scroll */
+        .dark-mode .month-name {
+            color: #ECEFF1;
+        }
+
         .reports-content {
             flex: 1;
             overflow-y: auto;
-            max-height: 150px; /* ارتفاع محدود برای نمایش 3 آیتم */
-            min-height: 150px; /* حداقل ارتفاع برای حفظ ظاهر */
+            max-height: 180px;
+            min-height: 180px;
         }
 
         .report-item {
@@ -512,33 +639,32 @@
             border-bottom: 1px solid #eee;
         }
 
-        .report-date {
-            font-weight: 500;
-        }
-
-        .report-amount {
-            font-weight: 600;
-            color: var(--primary-color);
+        .dark-mode .report-item {
+            border-bottom: 1px solid #546E7A;
         }
 
         .month-total {
             text-align: center;
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 2px solid #eee;
+            margin-top: 15px;
+            padding: 12px;
             font-weight: 600;
             font-size: 1.2rem;
             color: var(--primary-color);
         }
 
-        /* Comparison Section */
+        /* Comparison Section - مخفی شدن وقتی داده‌ای ندارد */
         .comparison-container {
-            margin-top: 15px;
+            margin-top: 10px;
             padding: 10px;
             border-radius: 8px;
             text-align: center;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
+            display: none; /* پیش‌فرض مخفی */
+        }
+
+        .comparison-container.show {
+            display: block;
         }
 
         .comparison-positive {
@@ -567,15 +693,31 @@
             border-bottom: 1px solid #eee;
         }
 
+        .dark-mode .settings-option {
+            border-bottom: 1px solid #546E7A;
+        }
+
         .settings-label {
             font-weight: 500;
         }
 
-        .currency-select, .theme-select {
+        .dark-mode .settings-label {
+            color: #ECEFF1;
+        }
+
+        .currency-select, .theme-select, .dark-mode-select {
             padding: 8px 12px;
             border-radius: 8px;
             border: 1px solid #ddd;
             background-color: #f9f9f9;
+        }
+
+        .dark-mode .currency-select, 
+        .dark-mode .theme-select, 
+        .dark-mode .dark-mode-select {
+            background-color: #455A64;
+            border-color: #546E7A;
+            color: #ECEFF1;
         }
 
         .theme-options {
@@ -595,6 +737,62 @@
 
         .theme-option.active {
             border-color: #333;
+        }
+
+        .dark-mode .theme-option.active {
+            border-color: #ECEFF1;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
         }
 
         /* Notification System */
@@ -690,65 +888,54 @@
             opacity: 0.9;
         }
 
-        /* Calendar Styles - بهبود یافته */
+        /* Calendar Styles */
         .calendar-container {
             margin-top: 20px;
         }
 
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            position: relative;
-        }
-
-        .calendar-month {
-            font-weight: 600;
-            font-size: 1.2rem;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .calendar-nav {
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-        }
-
-        .calendar-nav button {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            color: #555;
-            padding: 5px 10px;
-        }
-
         .calendar-grid {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
         }
 
-        .calendar-day-header {
+        .month-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .dark-mode .month-container {
+            background: #455A64;
+        }
+
+        .calendar-month-title {
             text-align: center;
-            font-weight: 600;
-            padding: 8px 0;
-            color: #666;
-            font-size: 0.9rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .calendar-days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
         }
 
         .calendar-day {
-            aspect-ratio: 1;
+            width: 100%;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s;
             font-weight: 500;
+            font-size: 0.8rem;
         }
 
         .calendar-day.empty {
@@ -766,16 +953,25 @@
             color: #999;
         }
 
+        .dark-mode .calendar-day.no-income {
+            background-color: #546E7A;
+            color: #B0BEC5;
+        }
+
         .calendar-day.today {
             border: 2px solid var(--secondary-color);
         }
 
-        /* Goal Setting Styles - بهبود یافته */
+        /* Goal Setting Styles */
         .goal-container {
             margin-top: 20px;
             padding: 15px;
             background-color: #f8f9fa;
             border-radius: 10px;
+        }
+
+        .dark-mode .goal-container {
+            background-color: #455A64;
         }
 
         .goal-header {
@@ -789,6 +985,10 @@
             font-weight: 600;
             font-size: 1.1rem;
             color: #333;
+        }
+
+        .dark-mode .goal-title {
+            color: #ECEFF1;
         }
 
         .goal-actions {
@@ -811,6 +1011,12 @@
             background-color: rgba(0, 0, 0, 0.05);
         }
 
+        .dark-mode .goal-edit-btn:hover, 
+        .dark-mode .goal-save-btn:hover, 
+        .dark-mode .goal-cancel-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
         .goal-input-container {
             display: none;
             margin-bottom: 15px;
@@ -830,6 +1036,12 @@
             background-color: white;
         }
 
+        .dark-mode .goal-input {
+            background-color: #455A64;
+            border-color: #546E7A;
+            color: #ECEFF1;
+        }
+
         .goal-display {
             margin-bottom: 15px;
         }
@@ -846,29 +1058,12 @@
             color: #666;
         }
 
+        .dark-mode .goal-date {
+            color: #B0BEC5;
+        }
+
         .goal-progress-container {
             margin-top: 20px;
-        }
-
-        .goal-progress-text {
-            text-align: center;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-
-        .goal-progress-bar {
-            height: 10px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
-
-        .goal-progress-fill {
-            height: 100%;
-            background: linear-gradient(to right, var(--primary-color) 0%, var(--secondary-color) 100%);
-            border-radius: 5px;
-            transition: width 0.5s ease;
         }
 
         .goal-chart-container {
@@ -885,6 +1080,115 @@
             font-weight: 600;
             background-color: rgba(76, 175, 80, 0.1);
             color: #2E7D32;
+        }
+
+        /* Export Only Styles */
+        .import-export-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .dark-mode .import-export-tabs {
+            background-color: #455A64;
+        }
+
+        .import-export-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .dark-mode .import-export-tab {
+            color: #ECEFF1;
+        }
+
+        .import-export-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .import-export-content {
+            display: none;
+        }
+
+        .import-export-content.active {
+            display: block;
+        }
+
+        .import-export-info {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .dark-mode .import-export-info {
+            background-color: #455A64;
+        }
+
+        .import-export-info i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .import-export-info h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .dark-mode .import-export-info h3 {
+            color: #ECEFF1;
+        }
+
+        .import-export-info p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .dark-mode .import-export-info p {
+            color: #B0BEC5;
+        }
+
+        .export-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(to right, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-bottom: 10px;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* اضافه شدن میانگین ماهانه در گزارش سالانه */
+        .yearly-average {
+            text-align: center;
+            margin-top: 15px;
+            padding: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            border-top: 1px solid #eee;
+        }
+
+        .dark-mode .yearly-average {
+            border-top: 1px solid #546E7A;
         }
 
         @keyframes fadeOut {
@@ -956,15 +1260,59 @@
             }
             
             .reports-container {
-                height: 350px;
+                height: 400px;
+            }
+            
+            .reports-content {
+                max-height: 180px;
+                min-height: 180px;
+            }
+            
+            .month-total {
+                margin-top: 15px;
+                padding: 12px;
+                font-size: 1.1rem;
+            }
+            
+            .comparison-container {
+                margin-top: 10px;
+                padding: 10px;
+                font-size: 0.9rem;
             }
             
             .goal-input-container.active {
                 flex-direction: column;
             }
             
-            .calendar-month {
+            .calendar-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .month-container {
+                padding: 8px;
+                margin: 0 2px;
+            }
+            
+            .calendar-day {
+                height: 30px;
+                font-size: 0.6rem;
+            }
+            
+            .calendar-days-grid {
+                gap: 1px;
+            }
+            
+            .import-export-info i {
+                font-size: 2.5rem;
+            }
+            
+            .import-export-info h3 {
                 font-size: 1.1rem;
+            }
+            
+            .entries-list {
+                max-height: 180px;
             }
         }
     </style>
@@ -1005,7 +1353,7 @@
         </div>
         
         <div class="menu-item" id="menu-export">
-            <i class="fas fa-file-excel"></i>
+            <i class="fas fa-file-export"></i>
             <span>خروجی اکسل</span>
         </div>
         
@@ -1029,7 +1377,7 @@
                 <div class="hamburger-line"></div>
             </div>
             <div class="app-icon" id="app-icon">T</div>
-            <h1> درآمد روزانه</h1>
+            <h1>درآمد روزانه</h1>
         </div>
         
         <div class="tabs">
@@ -1072,14 +1420,6 @@
             <!-- Calendar Tab -->
             <div class="tab-content" id="calendar-tab">
                 <div class="calendar-container">
-                    <div class="calendar-header">
-                        <div class="calendar-nav">
-                            <button id="prev-calendar-month"><i class="fas fa-chevron-right"></i></button>
-                            <div class="calendar-month" id="calendar-month">آبان ۱۴۰۴</div>
-                            <button id="next-calendar-month"><i class="fas fa-chevron-left"></i></button>
-                        </div>
-                    </div>
-                    
                     <div class="calendar-grid" id="calendar-grid">
                         <!-- Calendar will be generated here -->
                     </div>
@@ -1135,6 +1475,17 @@
             </div>
             
             <div class="settings-option">
+                <div class="settings-label">حالت دارک</div>
+                <div class="dark-mode-toggle">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="dark-mode-toggle">
+                        <span class="slider"></span>
+                    </label>
+                    <span id="dark-mode-status">غیرفعال</span>
+                </div>
+            </div>
+            
+            <div class="settings-option">
                 <div class="settings-label">تم برنامه</div>
                 <div class="theme-options">
                     <div class="theme-option active" style="background: linear-gradient(135deg, #FF7043 0%, #FF8A65 100%);" data-theme="orange"></div>
@@ -1151,7 +1502,7 @@
             
             <div class="settings-option">
                 <div class="settings-label">نسخه برنامه</div>
-                <div>۲.۲.۰</div>
+                <div>۲.۲.۳</div>
             </div>
         </div>
     </div>
@@ -1202,6 +1553,7 @@
                     <div class="chart-container">
                         <canvas id="yearly-chart"></canvas>
                     </div>
+                    <div class="yearly-average" id="yearly-average"></div>
                 </div>
             </div>
         </div>
@@ -1245,13 +1597,6 @@
                 </div>
                 
                 <div class="goal-progress-container" id="goal-progress-container">
-                    <div class="goal-progress-text" id="goal-progress-text">
-                        پیشرفت: <span id="goal-progress-percent">0</span>%
-                    </div>
-                    <div class="goal-progress-bar">
-                        <div class="goal-progress-fill" id="goal-progress-fill" style="width: 0%"></div>
-                    </div>
-                    
                     <div class="goal-chart-container">
                         <canvas id="goal-chart"></canvas>
                     </div>
@@ -1261,6 +1606,27 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div class="date-picker-modal" id="export-modal">
+        <div class="date-picker-content">
+            <div class="date-picker-header">
+                <div class="date-picker-title">Export Data</div>
+                <button class="close-btn" id="close-export">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="import-export-info">
+                <i class="fas fa-file-export"></i>
+                <h3>Export Data</h3>
+                <p>All your income data will be saved as CSV file.</p>
+            </div>
+            <button class="export-btn" id="export-btn">
+                <i class="fas fa-download"></i> Download CSV File
+            </button>
         </div>
     </div>
 
@@ -1277,13 +1643,20 @@
         let settingsModal;
         let reportsModal;
         let goalsModal;
+        let exportModal;
         let calendarYear = 1404;
         let calendarMonth = 8;
         let goals = {};
+        let darkMode = false;
         
-        // متغیرهای مربوط به سوایپ
-        let touchStartX = 0;
-        let touchEndX = 0;
+        // نرخ تبدیل ارز
+        const EXCHANGE_RATE = 100000; // 1 دلار = 100,000 تومان
+        
+        // Persian month names
+        const persianMonths = [
+            'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور',
+            'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
+        ];
 
         //------ Jalali conversion functions ------
         function gregorianToJalali(gy, gm, gd) {
@@ -1352,6 +1725,12 @@
             return j[0] + '/' + String(j[1]).padStart(2, '0') + '/' + String(j[2]).padStart(2, '0');
         }
 
+        // دریافت تاریخ شمسی جاری
+        function getCurrentJalaliDate() {
+            const today = new Date();
+            return dateToJalaliString(today);
+        }
+
         // نمایش پیام
         function showNotification(title, message, type = 'info') {
             const notificationContainer = document.getElementById('notification-container');
@@ -1417,19 +1796,19 @@
             }, 100);
         }
 
-        // خروجی اکسل
+        // خروجی اکسل به انگلیسی
         function exportToExcel() {
             if (entries.length === 0) {
-                showNotification('خطا', 'داده‌ای برای خروجی وجود ندارد', 'warning');
+                showNotification('Error', 'No data available for export', 'warning');
                 return;
             }
             
-            // ایجاد داده‌های CSV
-            let csvContent = "تاریخ,مبلغ,واحد پول\n";
+            // ایجاد داده‌های CSV با هدر انگلیسی
+            let csvContent = "Date,Amount,Currency\n";
             
             entries.forEach(entry => {
                 const amount = entry.currency === 'toman' ? 
-                    `${entry.amount} تومان` : 
+                    `${entry.amount} Toman` : 
                     `$${entry.amount}`;
                 csvContent += `${entry.date},${amount},${entry.currency}\n`;
             });
@@ -1440,14 +1819,14 @@
             const url = URL.createObjectURL(blob);
             
             link.setAttribute('href', url);
-            link.setAttribute('download', `درآمد-${dateToJalaliString(new Date())}.csv`);
+            link.setAttribute('download', `income-${dateToJalaliString(new Date())}.csv`);
             link.style.visibility = 'hidden';
             
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             
-            showNotification('خروجی موفق', 'فایل اکسل با موفقیت دانلود شد', 'success');
+            showNotification('Export Successful', 'CSV file downloaded successfully', 'success');
         }
 
         // مدیریت منوی همبرگری
@@ -1489,8 +1868,11 @@
                 menuReports.addEventListener('click', function() {
                     closeSideMenu();
                     if (reportsModal) {
+                        // تنظیم تاریخ به ماه جاری شمسی
+                        setCurrentJalaliDate();
                         reportsModal.style.display = 'flex';
                         updateReports();
+                        initSwipeForReports();
                     }
                 });
             }
@@ -1506,11 +1888,13 @@
                 });
             }
             
-            // خروجی اکسل
+            // منوی Export
             if (menuExport) {
                 menuExport.addEventListener('click', function() {
                     closeSideMenu();
-                    exportToExcel();
+                    if (exportModal) {
+                        exportModal.style.display = 'flex';
+                    }
                 });
             }
             
@@ -1520,6 +1904,8 @@
                     closeSideMenu();
                     if (settingsModal) {
                         settingsModal.style.display = 'flex';
+                        // به‌روزرسانی وضعیت حالت دارک در تنظیمات
+                        updateDarkModeToggle();
                     }
                 });
             }
@@ -1528,8 +1914,66 @@
             if (menuAbout) {
                 menuAbout.addEventListener('click', function() {
                     closeSideMenu();
-                    showNotification('درباره برنامه', ' درآمد روزانه - نسخه ۲.۲.۰\nتوسعه داده شده توسط بونوس بازان', 'info');
+                    showNotification('درباره برنامه', 'درآمد روزانه - نسخه ۲.۲.۳\nتوسعه داده شده توسط بونوس بازان', 'info');
                 });
+            }
+        }
+
+        // مدیریت سوایپ برای گزارش‌ها
+        function initSwipeForReports() {
+            const reportsContainer = document.querySelector('.reports-container');
+            if (!reportsContainer) return;
+            
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            reportsContainer.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].screenX;
+            }, false);
+            
+            reportsContainer.addEventListener('touchend', function(e) {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipeForReports();
+            }, false);
+            
+            function handleSwipeForReports() {
+                const swipeThreshold = 50;
+                
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    // سوایپ به چپ
+                    const monthlyReportElement = document.getElementById('monthly-report');
+                    if (monthlyReportElement.style.display !== 'none') {
+                        // گزارش ماهانه - ماه بعد
+                        selectedMonth++;
+                        if (selectedMonth > 12) {
+                            selectedMonth = 1;
+                            selectedYear++;
+                        }
+                        updateReports();
+                    } else {
+                        // گزارش سالانه - سال بعد
+                        selectedYear++;
+                        updateYearlyChart();
+                    }
+                }
+                
+                if (touchEndX > touchStartX + swipeThreshold) {
+                    // سوایپ به راست
+                    const monthlyReportElement = document.getElementById('monthly-report');
+                    if (monthlyReportElement.style.display !== 'none') {
+                        // گزارش ماهانه - ماه قبل
+                        selectedMonth--;
+                        if (selectedMonth < 1) {
+                            selectedMonth = 12;
+                            selectedYear--;
+                        }
+                        updateReports();
+                    } else {
+                        // گزارش سالانه - سال قبل
+                        selectedYear--;
+                        updateYearlyChart();
+                    }
+                }
             }
         }
 
@@ -1544,58 +1988,57 @@
             }, 3000);
         }
 
-        // فرمت کردن اعداد بزرگ
-        function formatLargeNumber(num) {
-            if (num >= 1000000) {
-                return (num / 1000000).toFixed(1) + 'M';
-            } else if (num >= 1000) {
-                return (num / 1000).toFixed(1) + 'K';
-            }
-            return num.toString();
-        }
-
-        // ایجاد تقویم
-        function generateCalendar() {
+        // ایجاد تقویم دو ماهه عمودی
+        function generateTwoMonthCalendar() {
             const calendarGrid = document.getElementById('calendar-grid');
-            const calendarMonthElement = document.getElementById('calendar-month');
             
-            if (!calendarGrid || !calendarMonthElement) return;
-            
-            // Persian month names
-            const persianMonths = [
-                'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور',
-                'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
-            ];
-            
-            // روزهای هفته
-            const weekDays = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
+            if (!calendarGrid) return;
             
             // پاک کردن تقویم فعلی
             calendarGrid.innerHTML = '';
             
-            // اضافه کردن هدر روزهای هفته
-            weekDays.forEach(day => {
-                const dayElement = document.createElement('div');
-                dayElement.className = 'calendar-day-header';
-                dayElement.textContent = day;
-                calendarGrid.appendChild(dayElement);
-            });
-            
-            // به‌روزرسانی عنوان ماه
-            calendarMonthElement.textContent = `${persianMonths[calendarMonth - 1]} ${calendarYear}`;
+            // تولید دو ماه
+            for (let monthOffset = 0; monthOffset < 2; monthOffset++) {
+                const currentMonth = calendarMonth + monthOffset > 12 ? 
+                    calendarMonth + monthOffset - 12 : calendarMonth + monthOffset;
+                const currentYear = calendarMonth + monthOffset > 12 ? 
+                    calendarYear + 1 : calendarYear;
+                
+                // ایجاد کانتینر برای هر ماه
+                const monthContainer = document.createElement('div');
+                monthContainer.className = 'month-container';
+                monthContainer.innerHTML = `
+                    <div class="calendar-month-title">
+                        ${persianMonths[currentMonth - 1]} ${currentYear}
+                    </div>
+                    <div class="calendar-days-grid" id="calendar-${monthOffset}">
+                        <!-- روزهای این ماه -->
+                    </div>
+                `;
+                
+                calendarGrid.appendChild(monthContainer);
+                
+                // تولید روزهای این ماه
+                generateSingleMonth(currentYear, currentMonth, monthOffset);
+            }
+        }
+
+        function generateSingleMonth(year, month, monthIndex) {
+            const daysGrid = document.getElementById(`calendar-${monthIndex}`);
+            if (!daysGrid) return;
             
             // محاسبه اولین روز ماه
-            const firstDay = getFirstDayOfMonth(calendarYear, calendarMonth);
+            const firstDay = getFirstDayOfMonth(year, month);
             
             // اضافه کردن خانه‌های خالی قبل از اولین روز ماه
             for (let i = 0; i < firstDay; i++) {
                 const emptyDay = document.createElement('div');
                 emptyDay.className = 'calendar-day empty';
-                calendarGrid.appendChild(emptyDay);
+                daysGrid.appendChild(emptyDay);
             }
             
             // محاسبه تعداد روزهای ماه
-            const daysInMonth = getDaysInMonth(calendarYear, calendarMonth);
+            const daysInMonth = getDaysInMonth(year, month);
             
             // اضافه کردن روزهای ماه
             for (let day = 1; day <= daysInMonth; day++) {
@@ -1604,7 +2047,7 @@
                 dayElement.textContent = day;
                 
                 // بررسی آیا این روز درآمد دارد یا نه
-                const dateString = `${calendarYear}/${String(calendarMonth).padStart(2, '0')}/${String(day).padStart(2, '0')}`;
+                const dateString = `${year}/${String(month).padStart(2, '0')}/${String(day).padStart(2, '0')}`;
                 const hasIncome = entries.some(entry => entry.date === dateString);
                 
                 if (hasIncome) {
@@ -1620,15 +2063,17 @@
                     dayElement.classList.add('today');
                 }
                 
-                calendarGrid.appendChild(dayElement);
+                daysGrid.appendChild(dayElement);
             }
         }
 
-        // محاسبه اولین روز ماه
+        // محاسبه اولین روز ماه شمسی
         function getFirstDayOfMonth(year, month) {
-            // این یک تقریب ساده است - در واقعیت نیاز به محاسبات دقیق‌تر دارید
-            // برای سادگی، فرض می‌کنیم اولین روز ماه همیشه شنبه است
-            return 0;
+            // محاسبه روز اول ماه شمسی
+            // برای سادگی، از یک الگوریتم ساده استفاده می‌کنیم
+            // در عمل باید از الگوریتم دقیق‌تری استفاده شود
+            const firstDay = (year * 12 + month - 1) % 7;
+            return firstDay;
         }
 
         // محاسبه تعداد روزهای ماه
@@ -1661,34 +2106,20 @@
                 return entryMonth === prevMonth && entryYear === prevYear;
             });
             
-            // محاسبه مجموع ماه جاری
+            // محاسبه مجموع ماه جاری با تبدیل ارز
             const currentMonthTotal = currentMonthEntries.reduce((sum, entry) => {
-                let amount = entry.amount;
-                if (entry.currency !== currency) {
-                    if (currency === 'toman') {
-                        amount = entry.amount * 100000;
-                    } else {
-                        amount = entry.amount / 100000;
-                    }
-                }
+                let amount = convertToCurrentCurrency(entry.amount, entry.currency);
                 return sum + amount;
             }, 0);
             
-            // محاسبه مجموع ماه قبل
+            // محاسبه مجموع ماه قبل با تبدیل ارز
             const prevMonthTotal = prevMonthEntries.reduce((sum, entry) => {
-                let amount = entry.amount;
-                if (entry.currency !== currency) {
-                    if (currency === 'toman') {
-                        amount = entry.amount * 100000;
-                    } else {
-                        amount = entry.amount / 100000;
-                    }
-                }
+                let amount = convertToCurrentCurrency(entry.amount, entry.currency);
                 return sum + amount;
             }, 0);
             
             // اگر ماه قبل صفر بود، نیازی به مقایسه نیست
-            if (prevMonthTotal === 0) {
+            if (prevMonthTotal === 0 || currentMonthTotal === 0) {
                 return null;
             }
             
@@ -1697,22 +2128,29 @@
             return changePercent;
         }
 
-        // به‌روزرسانی بخش هدف‌گذاری - بهبود یافته
+        // تبدیل مبلغ به واحد پول جاری
+        function convertToCurrentCurrency(amount, originalCurrency) {
+            if (originalCurrency === currency) {
+                return amount;
+            }
+            
+            if (currency === 'toman') {
+                // تبدیل از دلار به تومان
+                return amount * EXCHANGE_RATE;
+            } else {
+                // تبدیل از تومان به دلار
+                return amount / EXCHANGE_RATE;
+            }
+        }
+
+        // به‌روزرسانی بخش هدف‌گذاری
         function updateGoals() {
             const goalMonthElement = document.getElementById('goal-month');
             const goalDisplay = document.getElementById('goal-display');
             const goalAmountElement = document.getElementById('goal-amount');
             const goalDateElement = document.getElementById('goal-date');
             const goalProgressContainer = document.getElementById('goal-progress-container');
-            const goalProgressPercent = document.getElementById('goal-progress-percent');
-            const goalProgressFill = document.getElementById('goal-progress-fill');
             const goalAchievement = document.getElementById('goal-achievement');
-            
-            // Persian month names
-            const persianMonths = [
-                'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور',
-                'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
-            ];
             
             if (goalMonthElement) {
                 goalMonthElement.textContent = `${persianMonths[selectedMonth - 1]} ${selectedYear}`;
@@ -1723,8 +2161,9 @@
             const goal = goals[goalKey];
             
             if (goal) {
-                // نمایش هدف موجود
-                goalAmountElement.textContent = formatCurrency(goal.amount);
+                // نمایش هدف موجود با تبدیل ارز
+                const displayAmount = convertToCurrentCurrency(goal.amount, goal.currency);
+                goalAmountElement.textContent = formatCurrency(displayAmount);
                 goalDateElement.textContent = `هدف تعیین شده در ${goal.setDate}`;
                 
                 // محاسبه پیشرفت
@@ -1734,22 +2173,12 @@
                 });
                 
                 let currentMonthTotal = currentMonthEntries.reduce((sum, entry) => {
-                    let amount = entry.amount;
-                    if (entry.currency !== currency) {
-                        if (currency === 'toman') {
-                            amount = entry.amount * 100000;
-                        } else {
-                            amount = entry.amount / 100000;
-                        }
-                    }
+                    let amount = convertToCurrentCurrency(entry.amount, entry.currency);
                     return sum + amount;
                 }, 0);
                 
-                const progressPercent = Math.min((currentMonthTotal / goal.amount) * 100, 100);
+                const progressPercent = Math.min((currentMonthTotal / displayAmount) * 100, 100);
                 const progressPercentRounded = Math.round(progressPercent);
-                
-                goalProgressPercent.textContent = progressPercentRounded;
-                goalProgressFill.style.width = `${progressPercent}%`;
                 
                 // نمایش پیام دستیابی به هدف
                 if (progressPercent >= 100) {
@@ -1761,8 +2190,8 @@
                 // نمایش بخش پیشرفت
                 goalProgressContainer.style.display = 'block';
                 
-                // به‌روزرسانی نمودار دایره‌ای
-                updateGoalChart(currentMonthTotal, goal.amount);
+                // به‌روزرسانی نمودار دایره‌ای با درصد در مرکز
+                updateGoalChart(currentMonthTotal, displayAmount, progressPercentRounded);
             } else {
                 // عدم وجود هدف
                 goalAmountElement.textContent = 'هدف تعیین نشده';
@@ -1771,8 +2200,8 @@
             }
         }
 
-        // به‌روزرسانی نمودار دایره‌ای هدف - بهبود یافته
-        function updateGoalChart(currentAmount, goalAmount) {
+        // به‌روزرسانی نمودار دایره‌ای هدف
+        function updateGoalChart(currentAmount, goalAmount, progressPercent) {
             const goalChartCanvas = document.getElementById('goal-chart');
             if (!goalChartCanvas) return;
             
@@ -1783,15 +2212,30 @@
                 goalChartInstance.destroy();
             }
             
-            const progressPercent = Math.min((currentAmount / goalAmount) * 100, 100);
-            const remainingPercent = 100 - progressPercent;
+            const progressPercentValue = Math.min((currentAmount / goalAmount) * 100, 100);
+            const remainingPercent = 100 - progressPercentValue;
+            
+            // ثبت پلاگین برای نمایش متن در مرکز
+            const centerTextPlugin = {
+                id: 'centerText',
+                afterDraw: (chart) => {
+                    const { ctx, chartArea: { left, right, top, bottom, width, height } } = chart;
+                    ctx.save();
+                    ctx.font = 'bold 16px Vazirmatn, sans-serif';
+                    ctx.fillStyle = '#607D8B';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(`${progressPercent}%`, width / 2, height / 2);
+                    ctx.restore();
+                }
+            };
             
             goalChartInstance = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
                     labels: ['پیشرفت', 'باقی‌مانده'],
                     datasets: [{
-                        data: [progressPercent, remainingPercent],
+                        data: [progressPercentValue, remainingPercent],
                         backgroundColor: [
                             'rgba(76, 175, 80, 0.8)',
                             'rgba(189, 189, 189, 0.3)'
@@ -1801,7 +2245,7 @@
                             'rgba(189, 189, 189, 1)'
                         ],
                         borderWidth: 1,
-                        borderRadius: progressPercent === 100 ? 0 : 5,
+                        borderRadius: progressPercentValue === 100 ? 0 : 5,
                         borderAlign: 'inner'
                     }]
                 },
@@ -1835,11 +2279,12 @@
                         animateScale: true,
                         animateRotate: true
                     }
-                }
+                },
+                plugins: [centerTextPlugin]
             });
         }
 
-        // ذخیره هدف - بهبود یافته
+        // ذخیره هدف
         function saveGoal() {
             const goalInput = document.getElementById('goal-input');
             const goalValue = parseFloat(goalInput.value);
@@ -1883,10 +2328,10 @@
         // Format currency based on selected currency
         function formatCurrency(amount, curr = currency) {
             if (curr === 'dollar') {
-                return `$${amount.toFixed(2)}`;
+                return `$${Math.round(amount)}`;
             } else {
                 // Format with commas for thousands
-                return `${amount.toLocaleString('fa-IR')} تومان`;
+                return `${Math.round(amount).toLocaleString('fa-IR')} تومان`;
             }
         }
 
@@ -1894,6 +2339,9 @@
         function initSwipeForCalendar() {
             const calendarContainer = document.querySelector('.calendar-container');
             if (!calendarContainer) return;
+            
+            let touchStartX = 0;
+            let touchEndX = 0;
             
             calendarContainer.addEventListener('touchstart', function(e) {
                 touchStartX = e.changedTouches[0].screenX;
@@ -1914,7 +2362,7 @@
                         calendarMonth = 1;
                         calendarYear++;
                     }
-                    generateCalendar();
+                    generateTwoMonthCalendar();
                 }
                 
                 if (touchEndX > touchStartX + swipeThreshold) {
@@ -1924,9 +2372,66 @@
                         calendarMonth = 12;
                         calendarYear--;
                     }
-                    generateCalendar();
+                    generateTwoMonthCalendar();
                 }
             }
+        }
+
+        // تبدیل تاریخ شمسی به میلادی برای مرتب‌سازی
+        function convertJalaliToGregorian(jalaliDate) {
+            const [year, month, day] = jalaliDate.split('/').map(Number);
+            const gregorian = jalaliToGregorian(year, month, day);
+            return new Date(gregorian[0], gregorian[1] - 1, gregorian[2]);
+        }
+
+        // مدیریت حالت دارک
+        function toggleDarkMode() {
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const darkModeStatus = document.getElementById('dark-mode-status');
+            
+            if (darkModeToggle) {
+                darkMode = darkModeToggle.checked;
+                
+                // اعمال حالت دارک به بدنه
+                if (darkMode) {
+                    document.body.classList.add('dark-mode');
+                    if (darkModeStatus) darkModeStatus.textContent = 'فعال';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    if (darkModeStatus) darkModeStatus.textContent = 'غیرفعال';
+                }
+                
+                // ذخیره در localStorage
+                try {
+                    localStorage.setItem('darkMode', darkMode);
+                } catch (e) {
+                    console.error('Error saving dark mode preference:', e);
+                }
+            }
+        }
+
+        // به‌روزرسانی وضعیت حالت دارک در تنظیمات
+        function updateDarkModeToggle() {
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const darkModeStatus = document.getElementById('dark-mode-status');
+            
+            if (darkModeToggle) {
+                darkModeToggle.checked = darkMode;
+                
+                if (darkModeStatus) {
+                    darkModeStatus.textContent = darkMode ? 'فعال' : 'غیرفعال';
+                }
+            }
+        }
+
+        // تنظیم تاریخ شمسی جاری برای گزارشات
+        function setCurrentJalaliDate() {
+            const currentJalali = getCurrentJalaliDate();
+            const [year, month, day] = currentJalali.split('/').map(Number);
+            
+            selectedYear = year;
+            selectedMonth = month;
+            selectedDay = day;
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -1957,9 +2462,11 @@
             settingsModal = document.getElementById('settings-modal');
             reportsModal = document.getElementById('reports-modal');
             goalsModal = document.getElementById('goals-modal');
+            exportModal = document.getElementById('export-modal');
             const closeSettings = document.getElementById('close-settings');
             const closeReports = document.getElementById('close-reports');
             const closeGoals = document.getElementById('close-goals');
+            const closeExport = document.getElementById('close-export');
             const reportTypes = document.querySelectorAll('.report-type');
             const monthlyReport = document.getElementById('monthly-report');
             const yearlyReport = document.getElementById('yearly-report');
@@ -1969,8 +2476,8 @@
             const yearlyChart = document.getElementById('yearly-chart');
             const themeOptions = document.querySelectorAll('.theme-option');
             const appIcon = document.getElementById('app-icon');
-            const prevCalendarMonth = document.getElementById('prev-calendar-month');
-            const nextCalendarMonth = document.getElementById('next-calendar-month');
+            const exportBtn = document.getElementById('export-btn');
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
             
             // Elements for goals
             const prevGoalMonth = document.getElementById('prev-goal-month');
@@ -1982,12 +2489,6 @@
             const goalSaveBtn = document.getElementById('goal-save-btn');
             const goalCancelBtn = document.getElementById('goal-cancel-btn');
             
-            // Persian month names
-            const persianMonths = [
-                'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور',
-                'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
-            ];
-            
             // Initialize the app
             function initApp() {
                 // بارگذاری داده‌ها از localStorage
@@ -1997,10 +2498,15 @@
                     
                     const storedGoals = localStorage.getItem('incomeGoals');
                     goals = storedGoals ? JSON.parse(storedGoals) : {};
+                    
+                    // بارگذاری حالت دارک
+                    const storedDarkMode = localStorage.getItem('darkMode');
+                    darkMode = storedDarkMode === 'true';
                 } catch (e) {
                     console.error('Error loading data:', e);
                     entries = [];
                     goals = {};
+                    darkMode = false;
                 }
                 
                 // بارگذاری تنظیمات از localStorage
@@ -2014,6 +2520,14 @@
                     console.error('Error loading settings:', e);
                     currency = 'dollar';
                     theme = 'gray';
+                }
+                
+                // تنظیم تاریخ شمسی جاری برای گزارشات
+                setCurrentJalaliDate();
+                
+                // اعمال حالت دارک
+                if (darkMode) {
+                    document.body.classList.add('dark-mode');
                 }
                 
                 // به‌روزرسانی UI
@@ -2036,12 +2550,15 @@
                 setTheme(theme);
                 
                 // مقداردهی اولیه تقویم
-                generateCalendar();
+                generateTwoMonthCalendar();
                 
                 // مقداردهی اولیه ویژگی‌های جدید
                 initHamburgerMenu();
                 initWelcomeMessage();
                 initSwipeForCalendar(); // فعال کردن سوایپ برای تقویم
+                
+                // تنظیم وضعیت حالت دارک
+                updateDarkModeToggle();
                 
                 // Set up event listeners for tabs
                 tabs.forEach(tab => {
@@ -2058,7 +2575,7 @@
                         
                         // Update calendar if calendar tab is selected
                         if (tabId === 'calendar') {
-                            generateCalendar();
+                            generateTwoMonthCalendar();
                         }
                     });
                 });
@@ -2078,6 +2595,7 @@
                         if (reportType === 'monthly') {
                             monthlyReport.style.display = 'block';
                             yearlyReport.style.display = 'none';
+                            updateReports(); // Ensure data is updated
                         } else {
                             monthlyReport.style.display = 'none';
                             yearlyReport.style.display = 'block';
@@ -2213,7 +2731,7 @@
                 updateEntriesList();
                 updateTotal();
                 updateReports();
-                generateCalendar();
+                generateTwoMonthCalendar();
                 updateGoals();
                 
                 // بررسی رکوردها با entries قبلی
@@ -2233,11 +2751,11 @@
                 updateEntriesList();
                 updateTotal();
                 updateReports();
-                generateCalendar();
+                generateTwoMonthCalendar();
                 updateGoals();
             }
             
-            // Update the entries list in the UI
+            // Update the entries list in the UI - نمایش تمام داده‌ها به صورت اسکرول
             function updateEntriesList() {
                 const entriesList = document.getElementById('entries-list');
                 const emptyState = document.getElementById('empty-state');
@@ -2260,13 +2778,17 @@
                     emptyState.style.display = 'none';
                 }
                 
-                // نمایش entries به ترتیب معکوس (جدیدترین اول)
+                // نمایش تمام داده‌ها (بدون محدودیت)
                 entries.forEach(entry => {
                     const entryElement = document.createElement('div');
                     entryElement.className = 'entry-item';
+                    
+                    // تبدیل ارز برای نمایش
+                    const displayAmount = convertToCurrentCurrency(entry.amount, entry.currency);
+                    
                     entryElement.innerHTML = `
                         <div class="entry-date">${entry.date}</div>
-                        <div class="entry-amount">${formatCurrency(entry.amount, entry.currency)}</div>
+                        <div class="entry-amount">${formatCurrency(displayAmount)}</div>
                         <button class="delete-btn" data-id="${entry.id}">
                             <i class="fas fa-trash"></i>
                         </button>
@@ -2287,13 +2809,18 @@
             
             // Update the total amount
             function updateTotal() {
-                const total = entries.reduce((sum, entry) => sum + entry.amount, 0);
+                // محاسبه مجموع با تبدیل ارز
+                const total = entries.reduce((sum, entry) => {
+                    let amount = convertToCurrentCurrency(entry.amount, entry.currency);
+                    return sum + amount;
+                }, 0);
+                
                 if (totalAmount) {
                     totalAmount.textContent = formatCurrency(total);
                 }
             }
             
-            // Update reports
+            // Update reports - با محدودیت نمایش 5 داده و مرتب‌سازی از جدیدترین تاریخ
             function updateReports() {
                 if (currentMonthReport) {
                     currentMonthReport.textContent = `${persianMonths[selectedMonth - 1]} ${selectedYear}`;
@@ -2306,9 +2833,19 @@
                            entryYear === selectedYear;
                 });
                 
+                // مرتب‌سازی از جدیدترین تاریخ
+                currentMonthEntries.sort((a, b) => {
+                    const dateA = new Date(convertJalaliToGregorian(a.date));
+                    const dateB = new Date(convertJalaliToGregorian(b.date));
+                    return dateB - dateA; // نزولی (جدیدترین اول)
+                });
+                
+                // محدود کردن نمایش به 5 داده
+                const displayEntries = currentMonthEntries.slice(0, 5);
+                
                 if (!reportsList) return;
                 
-                if (currentMonthEntries.length === 0) {
+                if (displayEntries.length === 0) {
                     reportsList.innerHTML = `
                         <div class="empty-state">
                             <i class="fas fa-chart-bar"></i>
@@ -2320,32 +2857,30 @@
                     }
                     if (monthComparison) {
                         monthComparison.innerHTML = '';
+                        monthComparison.classList.remove('show');
                     }
                     return;
                 }
                 
                 reportsList.innerHTML = '';
                 
-                currentMonthEntries.forEach(entry => {
+                displayEntries.forEach(entry => {
                     const reportItem = document.createElement('div');
                     reportItem.className = 'report-item';
+                    
+                    // تبدیل ارز برای نمایش
+                    const displayAmount = convertToCurrentCurrency(entry.amount, entry.currency);
+                    
                     reportItem.innerHTML = `
                         <div class="report-date">${entry.date}</div>
-                        <div class="report-amount">${formatCurrency(entry.amount, entry.currency)}</div>
+                        <div class="report-amount">${formatCurrency(displayAmount)}</div>
                     `;
                     reportsList.appendChild(reportItem);
                 });
                 
                 // Calculate total based on current currency
                 let totalAmount = currentMonthEntries.reduce((sum, entry) => {
-                    let amount = entry.amount;
-                    if (entry.currency !== currency) {
-                        if (currency === 'toman') {
-                            amount = entry.amount * 100000;
-                        } else {
-                            amount = entry.amount / 100000;
-                        }
-                    }
+                    let amount = convertToCurrentCurrency(entry.amount, entry.currency);
                     return sum + amount;
                 }, 0);
                 
@@ -2364,9 +2899,10 @@
                             `نسبت به ماه قبل ${absPercent}% کمتر درآمد داشتی`;
                         
                         monthComparison.textContent = comparisonText;
-                        monthComparison.className = `comparison-container ${isPositive ? 'comparison-positive' : 'comparison-negative'}`;
+                        monthComparison.className = `comparison-container ${isPositive ? 'comparison-positive' : 'comparison-negative'} show`;
                     } else {
                         monthComparison.innerHTML = '';
+                        monthComparison.classList.remove('show');
                     }
                 }
             }
@@ -2384,20 +2920,13 @@
                     const [entryYear, entryMonth] = entry.date.split('/').map(Number);
                     
                     if (entryYear === selectedYear) {
-                        let amount = entry.amount;
-                        
-                        // Convert to current currency if needed
-                        if (entry.currency !== currency) {
-                            if (currency === 'toman') {
-                                amount = entry.amount * 100000; // Assuming 1$ = 100,000 Toman
-                            } else {
-                                amount = entry.amount / 100000; // Assuming 1$ = 100,000 Toman
-                            }
-                        }
-                        
+                        let amount = convertToCurrentCurrency(entry.amount, entry.currency);
                         yearlyData[entryMonth - 1] += amount;
                     }
                 });
+                
+                // محاسبه میانگین ماهانه به صورت عدد صحیح
+                const monthlyAverage = Math.round(yearlyData.reduce((sum, amount) => sum + amount, 0) / 12);
                 
                 // Create chart
                 const ctx = yearlyChart ? yearlyChart.getContext('2d') : null;
@@ -2434,9 +2963,7 @@
                                 beginAtZero: true,
                                 ticks: {
                                     callback: function(value) {
-                                        return currency === 'toman' ? 
-                                            formatLargeNumber(value) + ' تومان' : 
-                                            '$' + formatLargeNumber(value);
+                                        return formatCurrency(value);
                                     }
                                 }
                             }
@@ -2449,15 +2976,26 @@
                                 callbacks: {
                                     label: function(context) {
                                         const value = context.parsed.y;
-                                        return currency === 'toman' ? 
-                                            value.toLocaleString('fa-IR') + ' تومان' : 
-                                            '$' + value.toFixed(2);
+                                        return formatCurrency(value);
                                     }
                                 }
                             }
                         }
                     }
                 });
+                
+                // نمایش میانگین ماهانه
+                const averageElement = document.getElementById('yearly-average');
+                if (!averageElement) {
+                    // ایجاد المان اگر وجود ندارد
+                    const averageDiv = document.createElement('div');
+                    averageDiv.className = 'yearly-average';
+                    averageDiv.id = 'yearly-average';
+                    yearlyReport.appendChild(averageDiv);
+                }
+                
+                document.getElementById('yearly-average').textContent = 
+                    `میانگین درآمد ماهانه: ${formatCurrency(monthlyAverage)}`;
             }
             
             // Set theme
@@ -2628,29 +3166,6 @@
                 });
             }
             
-            // Calendar navigation
-            if (prevCalendarMonth) {
-                prevCalendarMonth.addEventListener('click', function() {
-                    calendarMonth--;
-                    if (calendarMonth < 1) {
-                        calendarMonth = 12;
-                        calendarYear--;
-                    }
-                    generateCalendar();
-                });
-            }
-            
-            if (nextCalendarMonth) {
-                nextCalendarMonth.addEventListener('click', function() {
-                    calendarMonth++;
-                    if (calendarMonth > 12) {
-                        calendarMonth = 1;
-                        calendarYear++;
-                    }
-                    generateCalendar();
-                });
-            }
-            
             // Goals navigation
             if (prevGoalMonth) {
                 prevGoalMonth.addEventListener('click', function() {
@@ -2724,6 +3239,11 @@
                 });
             }
             
+            // Dark mode toggle
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('change', toggleDarkMode);
+            }
+            
             // Settings modal
             if (closeSettings) {
                 closeSettings.addEventListener('click', function() {
@@ -2749,6 +3269,20 @@
                         goalsModal.style.display = 'none';
                     }
                 });
+            }
+            
+            // Export modal
+            if (closeExport) {
+                closeExport.addEventListener('click', function() {
+                    if (exportModal) {
+                        exportModal.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Export button
+            if (exportBtn) {
+                exportBtn.addEventListener('click', exportToExcel);
             }
             
             // Theme selection
